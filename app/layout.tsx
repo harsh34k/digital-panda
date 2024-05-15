@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { ClerkProvider } from '@clerk/nextjs'
+import { ModalProvider } from "@/Providers/modal-provider";
+
+import { ToastProvider } from "@/Providers/toast-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,9 +18,45 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={inter.className}>
+          <ToastProvider />
+          <ModalProvider />
+          {children}</body>
+      </html>
+    </ClerkProvider>
   );
 }
+
+
+// import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
+// import './globals.css';
+
+// export default function RootLayout({
+//   children,
+// }: {
+//   children: React.ReactNode
+// }) {
+//   return (
+//     <ClerkProvider>
+//       <html lang="en">
+//         <body>
+//           <header>
+//             <SignedOut>
+//               <SignInButton />
+//             </SignedOut>
+//             <SignedIn>
+//               <UserButton />
+//             </SignedIn>
+//           </header>
+//           <main>
+//             {children}
+//           </main>
+//         </body>
+//       </html>
+//     </ClerkProvider>
+//   )
+// }
